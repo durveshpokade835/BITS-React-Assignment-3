@@ -17,8 +17,6 @@ const Login = () => {
             ...prevLoginData,
             [name]: value,
         }));
-        // localStorage.setItem("email", email);
-        // localStorage.setItem("password", password);
         setIsLoggedIn(true);
     }
     const handleSubmit = (e) => {
@@ -48,9 +46,7 @@ const Login = () => {
                         name="email"
                         value={loginData.email}
                         onChange={(e) => handleInputChange(e)} />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
+
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">

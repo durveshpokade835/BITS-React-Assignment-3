@@ -24,7 +24,7 @@ const NavBar = () => {
                     <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
                     {/* <Nav.Link as={NavLink} to="/dashboard">DashBoard</Nav.Link> */}
                 </Nav>
-                <Button variant="light" onClick={handleLogOut}>Logout</Button>
+                {isLoggedIn && <Button variant="light" onClick={handleLogOut}>Logout</Button>}
             </Container>
         </Navbar>
 
