@@ -6,7 +6,8 @@ import NavBar from './components/NavBar.jsx'
 import Home from './components/Home.jsx'
 import Login from './components/Login.jsx'
 import DashBoard from './components/DashBoard.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
+
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
+    loader: () => {
+      let item = localStorage.getItem("isAuthenticated");
+      console.log("item", item);
+      if (item !== "authenticated") {
+        return redirect("/");
+      }
+      return null;
+    },
     element: (
       <>
         <NavBar />

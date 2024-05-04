@@ -29,6 +29,7 @@ const Login = () => {
             storedEmail === loginData.email &&
             storedPassword === loginData.password
         ) {
+            localStorage.setItem("isAuthenticated", "authenticated");
             navigator("/DashBoard");
         } else {
             alert('Enter Valid Credentials')

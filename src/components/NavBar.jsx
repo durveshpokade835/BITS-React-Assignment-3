@@ -4,10 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
+import { useState } from "react";
 
 const NavBar = () => {
     const navigator = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const handleLogOut = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem("isAuthenticated");
         navigator("/");
     }
     return (

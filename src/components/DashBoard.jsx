@@ -1,4 +1,4 @@
-import { Table, Container, Col, Form, Row, Button } from 'react-bootstrap/';
+import { Table, Container, Col, Form, Row, Button, Pagination } from 'react-bootstrap/';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -11,6 +11,8 @@ export default function DashBoard() {
         title: '',
         body: ''
     });
+    const [currentPage, setCurrentPage] = useState(1); // Current page state
+    const [postsPerPage] = useState(5); // Number of posts per page
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -81,6 +83,12 @@ export default function DashBoard() {
         fetchData();
     }, []);
 
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = records.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
         <>
             <Container id='con1'>
@@ -122,7 +130,7 @@ export default function DashBoard() {
                     </tr>
                 </thead>
                 <tbody>
-                    {records.map((record, index) => (
+                    {currentPosts.map((record, index) => (
                         <tr key={record.id}>
                             <td>{record.id}</td>
                             <td>{record.title}</td>
@@ -144,6 +152,15 @@ export default function DashBoard() {
                     ))}
                 </tbody>
             </Table>
+            <Pagination>
+                <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+                {[...Array(Math.ceil(records.length / postsPerPage)).keys()].map(number => (
+                    <Pagination.Item key={number + 1} onClick={() => paginate(number + 1)} active={number + 1 === currentPage}>
+                        {number + 1}
+                    </Pagination.Item>
+                ))}
+                <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(records.length / postsPerPage)} />
+            </Pagination>
         </>
     );
 }
